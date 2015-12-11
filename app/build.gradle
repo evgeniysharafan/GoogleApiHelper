@@ -1,0 +1,88 @@
+import java.text.SimpleDateFormat
+
+apply plugin: 'com.android.application'
+
+android {
+    def versionMajor = 1 // 1 - 20000
+    def versionMinor = 0 // 0 - 99
+    def versionPatch = 0 // 0 - 999
+
+    def appName = "GoogleApiActivityExample"
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.evgeniysharafan.googleapiclientexample"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode versionMajor * 100000 + versionMinor * 1000 + versionPatch
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file("${rootDir}/keystore/debug.jks")
+            storePassword 'android'
+        }
+        release {
+            keyAlias ''
+            keyPassword ''
+            storeFile file("${rootDir}/keystore/release.jks")
+            storePassword ''
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            manifestPlaceholders = [googleMapsApiKey: "AIzaSyDUrGypFqlnSPVBOD2KpcK2jSYtf2T6Hyo"]
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [googleMapsApiKey: ""]
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            File alignedOutputFile = output.outputFile
+            if (alignedOutputFile != null && alignedOutputFile.name.endsWith('.apk')) {
+                def df = new SimpleDateFormat("yy.MM.dd")
+                df.setTimeZone(TimeZone.getTimeZone("UTC"))
+
+                String buildName = "${appName}_" +
+                        "${variant.mergedFlavor.versionName}_" +
+                        "${df.format(new Date())}_" +
+                        "${variant.buildType.name}"
+
+                if (variant.buildType.zipAlignEnabled) {
+                    output.outputFile = new File(alignedOutputFile.parent, buildName + '.apk')
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.google.android.gms:play-services-maps:8.3.0'
+    compile 'com.google.android.gms:play-services-location:8.3.0'
+    compile 'com.google.maps.android:android-maps-utils:0.3.4'
+    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+}

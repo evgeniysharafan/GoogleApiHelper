@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">GoogleApiActivityExample</string>
+
+    <!-- Google Play Services-->
+    <string name="play_services_error_fmt">Google Play Services Error: %i</string>
+    <string name="ok">OK</string>
+
+    <!--Reverse geocoding-->
+    <string name="no_geocoder_available">No geocoder available</string>
+    <string name="no_address_found">Sorry, no address found</string>
+    <string name="no_location_data_provided">No location data provided</string>
+    <string name="service_not_available">Sorry, the service is not available</string>
+    <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
+
+    <!--Permissions-->
+    <string name="start_permissions_rationale_text">The app can\'t work without permissions, please enable them.</string>
+    <string name="action_enable">ENABLE</string>
+    <string name="location_permissions_rationale_text">We can\'t get your location, please enable Location permission.</string>
+    <string name="storage_permissions_rationale_text">Please enable Storage permission.</string>
+
+</resources>
