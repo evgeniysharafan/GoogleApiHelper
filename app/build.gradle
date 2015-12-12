@@ -38,13 +38,15 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            manifestPlaceholders = [googleMapsApiKey: "AIzaSyDUrGypFqlnSPVBOD2KpcK2jSYtf2T6Hyo"]
+            manifestPlaceholders = [allowBackup     : false, fullBackupContent: false,
+                                    googleMapsApiKey: "AIzaSyDUrGypFqlnSPVBOD2KpcK2jSYtf2T6Hyo"]
         }
         release {
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [googleMapsApiKey: ""]
+            manifestPlaceholders = [allowBackup     : true, fullBackupContent: true,
+                                    googleMapsApiKey: ""]
         }
     }
 
