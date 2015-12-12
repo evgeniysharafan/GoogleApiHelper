@@ -7,7 +7,7 @@ android {
     def versionMinor = 0 // 0 - 99
     def versionPatch = 0 // 0 - 999
 
-    def appName = "GoogleApiActivityExample"
+    def appName = "GoogleApiHelper"
 
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
