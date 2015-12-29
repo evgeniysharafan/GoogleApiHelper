@@ -9,8 +9,8 @@ import android.os.ResultReceiver;
 import android.text.TextUtils;
 
 import com.evgeniysharafan.googleapiclientexample.R;
-import com.evgeniysharafan.googleapiclientexample.util.lib.L;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Utils;
+import com.evgeniysharafan.utils.L;
+import com.evgeniysharafan.utils.Utils;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.evgeniysharafan.googleapiclientexample.R;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Toasts;
+import com.evgeniysharafan.utils.Toasts;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

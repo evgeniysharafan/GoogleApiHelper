@@ -15,9 +15,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.evgeniysharafan.googleapiclientexample.R;
-import com.evgeniysharafan.googleapiclientexample.util.lib.L;
-import com.evgeniysharafan.googleapiclientexample.util.lib.PrefUtils;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Utils;
+import com.evgeniysharafan.utils.L;
+import com.evgeniysharafan.utils.PrefUtils;
+import com.evgeniysharafan.utils.Utils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

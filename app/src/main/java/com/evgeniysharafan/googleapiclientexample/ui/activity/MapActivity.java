@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.evgeniysharafan.googleapiclientexample.R;
 import com.evgeniysharafan.googleapiclientexample.ui.fragment.MapFragment;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Fragments;
+import com.evgeniysharafan.utils.Fragments;
 
 public class MapActivity extends GoogleApiActivity {
 

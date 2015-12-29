@@ -87,4 +87,5 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.3.4'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.evgeniysharafan.utils:utils:1.0.2'
 }

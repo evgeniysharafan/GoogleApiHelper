@@ -3,8 +3,7 @@ package com.evgeniysharafan.googleapiclientexample.util;
 import android.app.Application;
 
 import com.evgeniysharafan.googleapiclientexample.BuildConfig;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Utils;
-
+import com.evgeniysharafan.utils.Utils;
 
 public final class App extends Application {
 

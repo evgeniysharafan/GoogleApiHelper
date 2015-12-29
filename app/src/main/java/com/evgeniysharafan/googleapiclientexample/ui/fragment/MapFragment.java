@@ -21,11 +21,11 @@ import com.evgeniysharafan.googleapiclientexample.R;
 import com.evgeniysharafan.googleapiclientexample.service.FetchAddressIntentService;
 import com.evgeniysharafan.googleapiclientexample.ui.activity.GoogleApiActivity;
 import com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.PermissionRequestCode;
-import com.evgeniysharafan.googleapiclientexample.util.lib.L;
-import com.evgeniysharafan.googleapiclientexample.util.lib.RandomUtils;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Res;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Toasts;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Utils;
+import com.evgeniysharafan.utils.L;
+import com.evgeniysharafan.utils.RandomUtils;
+import com.evgeniysharafan.utils.Res;
+import com.evgeniysharafan.utils.Toasts;
+import com.evgeniysharafan.utils.Utils;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -255,7 +256,7 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
         for (int i = 0; i < 20; i++) {
             String title = i + "";
             Marker m = map.addMarker(new MarkerOptions()
-                    .position(RandomUtils.getCoordinates(lastLocation, 500))
+                    .position(getCoordinates(lastLocation, 500))
                     .title(title)
                     .snippet(title)
                     .icon(BitmapDescriptorFactory.defaultMarker(RandomUtils.getInt(360))));
@@ -264,6 +265,10 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
 
         map.setMyLocationEnabled(true);
         map.setOnInfoWindowClickListener(this);
+    }
+
+    private LatLng getCoordinates(LatLng point, int radiusInMeters) {
+        return SphericalUtil.computeOffset(point, RandomUtils.getInt(radiusInMeters), RandomUtils.getInt(360));
     }
 
     @Override

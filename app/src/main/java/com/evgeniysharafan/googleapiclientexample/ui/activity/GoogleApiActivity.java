@@ -12,8 +12,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evgeniysharafan.googleapiclientexample.R;
-import com.evgeniysharafan.googleapiclientexample.util.lib.L;
-import com.evgeniysharafan.googleapiclientexample.util.lib.Res;
+import com.evgeniysharafan.utils.L;
+import com.evgeniysharafan.utils.Res;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
