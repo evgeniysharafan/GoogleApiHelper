@@ -88,7 +88,6 @@ public class PermissionUtil {
         return false;
     }
 
-
     public static void setPermissionsResult(@PermissionRequestCode int requestCode) {
         PrefUtils.put(String.valueOf(requestCode), true);
     }
@@ -119,7 +118,7 @@ public class PermissionUtil {
         return snackbar;
     }
 
-    private static void openDetailsSettings(Activity activity) {
+    public static void openDetailsSettings(Activity activity) {
         Uri data = new Uri.Builder().scheme("package").opaquePart(Utils.getPackageName()).build();
         activity.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(data));
     }
