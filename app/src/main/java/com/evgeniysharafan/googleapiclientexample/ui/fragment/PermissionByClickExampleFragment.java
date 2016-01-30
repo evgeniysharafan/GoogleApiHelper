@@ -73,7 +73,7 @@ public class PermissionByClickExampleFragment extends Fragment {
             snackbar = showSnackbarWithRequestPermissions(requestCode, deniedPermissions);
         } else {
             if (hasPermissionsResult(requestCode)) {
-                snackbar = showSnackbarWithOpenDetails(snackbarContainer,
+                snackbar = showSnackbarWithOpenDetails(getActivity(), snackbarContainer,
                         R.string.storage_permissions_rationale_text);
             } else {
                 askForPermissions(requestCode, deniedPermissions);

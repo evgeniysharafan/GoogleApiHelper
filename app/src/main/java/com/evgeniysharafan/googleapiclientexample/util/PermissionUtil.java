@@ -42,7 +42,8 @@ public class PermissionUtil {
     }
 
     public static final String[] START_PERMISSIONS;
-    public static final String[] LOCATION_PERMISSIONS = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+    public static final String[] LOCATION_PERMISSIONS = {Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION};
     public static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     public static final String STATE_IS_PERMISSIONS_DIALOG_SHOWING = "state_is_permissions_dialog_showing";
@@ -96,14 +97,14 @@ public class PermissionUtil {
         return PrefUtils.getBool(String.valueOf(requestCode), false);
     }
 
-    public static Snackbar showSnackbarWithOpenDetails(View container, @StringRes int text) {
-        return showSnackbar(container, text,
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openDetailsSettings();
-                    }
-                });
+    public static Snackbar showSnackbarWithOpenDetails(final Activity activity,
+                                                       View container, @StringRes int text) {
+        return showSnackbar(container, text, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDetailsSettings(activity);
+            }
+        });
     }
 
     public static Snackbar showSnackbar(View container, @StringRes int text, View.OnClickListener click) {
@@ -118,12 +119,9 @@ public class PermissionUtil {
         return snackbar;
     }
 
-    public static void openDetailsSettings() {
+    private static void openDetailsSettings(Activity activity) {
         Uri data = new Uri.Builder().scheme("package").opaquePart(Utils.getPackageName()).build();
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(data);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Utils.getApp().startActivity(intent);
+        activity.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(data));
     }
 
     private static boolean isPermissionGranted(String permission) {

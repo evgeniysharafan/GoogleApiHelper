@@ -139,7 +139,7 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
             permissionsSnackbar = showSnackbarWithRequestPermissions(requestCode, deniedPermissions);
         } else {
             if (hasPermissionsResult(requestCode)) {
-                permissionsSnackbar = showSnackbarWithOpenDetails(snackbarContainer,
+                permissionsSnackbar = showSnackbarWithOpenDetails(getActivity(), snackbarContainer,
                         R.string.location_permissions_rationale_text);
             } else {
                 askForPermissions(requestCode, deniedPermissions);
