@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.evgeniysharafan.googleapiclientexample.R;
 import com.evgeniysharafan.utils.Toasts;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.PermissionRequestCode;
@@ -28,9 +28,10 @@ import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.sho
 import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.showSnackbar;
 import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.showSnackbarWithOpenDetails;
 
+@SuppressWarnings("unused")
 public class PermissionByClickExampleFragment extends Fragment {
 
-    @InjectView(R.id.snackbar_container)
+    @Bind(R.id.snackbar_container)
     CoordinatorLayout snackbarContainer;
 
     private Snackbar snackbar;
@@ -43,7 +44,7 @@ public class PermissionByClickExampleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.permission_by_click_example, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         return view;
     }
@@ -110,7 +111,7 @@ public class PermissionByClickExampleFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
 }

@@ -43,8 +43,8 @@ import com.google.maps.android.SphericalUtil;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.LOCATION_PERMISSIONS;
 import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.PermissionRequestCode.LOCATION;
@@ -58,6 +58,7 @@ import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.sho
 import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.showSnackbarWithOpenDetails;
 import static com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 
+@SuppressWarnings("ResourceType")
 public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapReadyCallback,
         OnMapClickListener, OnInfoWindowClickListener {
 
@@ -76,7 +77,7 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
 
     private float markerColor;
 
-    @InjectView(R.id.snackbar_container)
+    @Bind(R.id.snackbar_container)
     CoordinatorLayout snackbarContainer;
 
     public static MapFragment newInstance() {
@@ -87,7 +88,7 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         restoreState(savedInstanceState);
         initUI();
 
@@ -336,7 +337,7 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @SuppressLint("ParcelCreator")
