@@ -62,12 +62,12 @@ public class FetchAddressIntentService extends IntentService {
         } catch (IOException ioException) {
             // Catch network or other I/O problems.
             errorMessage = getString(R.string.service_not_available);
-            L.e(errorMessage, ioException);
+            L.e(ioException, errorMessage);
         } catch (IllegalArgumentException illegalArgumentException) {
             // Catch invalid latitude or longitude values.
             errorMessage = getString(R.string.invalid_lat_long_used);
-            L.e(errorMessage + ". " + "Latitude = " + location.latitude +
-                    ", Longitude = " + location.longitude, illegalArgumentException);
+            L.e(illegalArgumentException, errorMessage + ". " + "Latitude = " + location.latitude +
+                    ", Longitude = " + location.longitude);
         }
 
         // Handle case where no address was found.

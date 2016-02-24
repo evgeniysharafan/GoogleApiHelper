@@ -92,7 +92,7 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
                 connectionResult.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
             } catch (IntentSender.SendIntentException e) {
                 // There was an error with the resolution intent. Try again.
-                L.e("Could not resolve ConnectionResult", e);
+                L.e(e, "Could not resolve ConnectionResult");
                 isResolvingError = false;
                 connect();
             }
