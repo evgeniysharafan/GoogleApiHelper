@@ -25,6 +25,7 @@ import static com.evgeniysharafan.googleapiclientexample.util.PermissionUtil.has
 import static com.google.android.gms.common.api.GoogleApiClient.Builder;
 import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 
+@SuppressWarnings("unused")
 public class GoogleApiActivity extends AppCompatActivity implements OnConnectionFailedListener {
 
     private static final int REQUEST_RESOLVE_ERROR = 1001;
@@ -38,30 +39,27 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
-        if (savedInstanceState != null) {
-            isResolvingError = savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
-        }
+        isResolvingError = savedInstanceState != null && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
     }
 
     public synchronized void buildLocationClient(ConnectionCallbacks callbacks) {
         if (hasAllPermissions(LOCATION_PERMISSIONS)) {
             googleApiClient = new Builder(this)
+                    .addApi(LocationServices.API)
                     .addConnectionCallbacks(callbacks)
                     .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
                     .build();
-        }
-    }
-
-    public void connect() {
-        if (googleApiClient != null && !googleApiClient.isConnected() && !googleApiClient.isConnecting()
-                && !isResolvingError) {
-            googleApiClient.connect();
         }
     }
 
     public GoogleApiClient getClient() {
         return googleApiClient;
+    }
+
+    public void connect() {
+        if (googleApiClient != null && !googleApiClient.isConnected() && !googleApiClient.isConnecting() && !isResolvingError) {
+            googleApiClient.connect();
+        }
     }
 
     public void disconnect() {
@@ -78,8 +76,8 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        L.e(connectionResult.toString());
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        L.i(connectionResult.toString());
 
         if (isResolvingError) {
             // Already attempting to resolve an error.
@@ -88,37 +86,32 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
 
         if (connectionResult.hasResolution()) {
             try {
-                isResolvingError = true;
                 connectionResult.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
+                isResolvingError = true;
             } catch (IntentSender.SendIntentException e) {
                 // There was an error with the resolution intent. Try again.
                 L.e(e, "Could not resolve ConnectionResult");
-                isResolvingError = false;
                 connect();
             }
         } else {
             // not resolvable... so show an error message
             showErrorDialog(connectionResult.getErrorCode());
-            isResolvingError = true;
         }
     }
 
     public void onConnectionSuspended(int i) {
-        L.e("onConnectionSuspended " + i);
+        L.i("onConnectionSuspended " + i);
         connect();
     }
 
     private void showErrorDialog(int errorCode) {
-        if (GoogleApiAvailability.getInstance().isUserResolvableError(errorCode)) {
-            ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt(DIALOG_ERROR, errorCode);
-            dialogFragment.setArguments(args);
-            dialogFragment.show(getSupportFragmentManager(), DIALOG_ERROR);
-        } else {
-            showErrorDialog(errorCode);
-            isResolvingError = false;
-        }
+        ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt(DIALOG_ERROR, errorCode);
+        dialogFragment.setArguments(args);
+        dialogFragment.show(getSupportFragmentManager(), DIALOG_ERROR);
+
+        isResolvingError = true;
     }
 
     public void onDialogDismissed() {
@@ -148,8 +141,7 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             int errorCode = this.getArguments().getInt(DIALOG_ERROR);
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), errorCode,
-                    REQUEST_RESOLVE_ERROR);
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), errorCode, REQUEST_RESOLVE_ERROR);
             if (dialog != null) {
                 return dialog;
             } else {
@@ -163,7 +155,9 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
 
         @Override
         public void onDismiss(DialogInterface dialog) {
-            ((GoogleApiActivity) getActivity()).onDialogDismissed();
+            if (getActivity() != null) {
+                ((GoogleApiActivity) getActivity()).onDialogDismissed();
+            }
         }
     }
 

@@ -224,7 +224,7 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
             if (markers.isEmpty()) {
                 showPins();
             }
-
+//TODO now enable doesn't work
             if (needToAnimate) {
                 animateToLastLocation();
             }
@@ -232,6 +232,10 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
     }
 
     private void animateToLastLocation() {
+        if (markers.isEmpty()) {
+            return;
+        }
+
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (Marker marker : markers.keySet()) {
             builder.include(marker.getPosition());
@@ -249,6 +253,11 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
     private void showPins() {
         if (map == null) {
             L.w("map == null, return");
+            return;
+        }
+
+        if (!hasAllPermissions(LOCATION_PERMISSIONS)) {
+            L.e("No location permission");
             return;
         }
 
