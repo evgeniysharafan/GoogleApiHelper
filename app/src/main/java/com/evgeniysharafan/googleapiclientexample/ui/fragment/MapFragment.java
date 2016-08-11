@@ -224,7 +224,7 @@ public class MapFragment extends Fragment implements ConnectionCallbacks, OnMapR
             if (markers.isEmpty()) {
                 showPins();
             }
-//TODO now enable doesn't work
+
             if (needToAnimate) {
                 animateToLastLocation();
             }
