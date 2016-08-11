@@ -5,8 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -36,10 +36,11 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     private boolean isResolvingError;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         isResolvingError = savedInstanceState != null && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
+        L.e("isResolvingError = " + isResolvingError);
     }
 
     public synchronized void buildLocationClient(ConnectionCallbacks callbacks) {
@@ -57,6 +58,7 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     public void connect() {
+        L.e("isResolvingError = " + isResolvingError);
         if (googleApiClient != null && !googleApiClient.isConnected() && !googleApiClient.isConnecting() && !isResolvingError) {
             googleApiClient.connect();
         }
@@ -105,6 +107,7 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     private void showErrorDialog(int errorCode) {
+        L.e("showErrorDialog");
         ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
         Bundle args = new Bundle();
         args.putInt(DIALOG_ERROR, errorCode);
@@ -115,12 +118,14 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     public void onDialogDismissed() {
+        L.e("onDialogDismissed");
         isResolvingError = false;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_RESOLVE_ERROR) {
+            L.e("isResolvingError = " + isResolvingError);
             isResolvingError = false;
             if (resultCode == RESULT_OK) {
                 connect();
@@ -131,8 +136,10 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        L.e("isResolvingError = " + isResolvingError);
         outState.putBoolean(STATE_RESOLVING_ERROR, isResolvingError);
     }
 
