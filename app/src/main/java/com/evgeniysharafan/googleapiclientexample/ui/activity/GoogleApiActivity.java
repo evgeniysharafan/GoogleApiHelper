@@ -40,7 +40,6 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
         super.onCreate(savedInstanceState);
 
         isResolvingError = savedInstanceState != null && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
-        L.e("isResolvingError = " + isResolvingError);
     }
 
     public synchronized void buildLocationClient(ConnectionCallbacks callbacks) {
@@ -58,7 +57,6 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     public void connect() {
-        L.e("isResolvingError = " + isResolvingError);
         if (googleApiClient != null && !googleApiClient.isConnected() && !googleApiClient.isConnecting() && !isResolvingError) {
             googleApiClient.connect();
         }
@@ -107,7 +105,6 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     private void showErrorDialog(int errorCode) {
-        L.e("showErrorDialog");
         ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
         Bundle args = new Bundle();
         args.putInt(DIALOG_ERROR, errorCode);
@@ -118,14 +115,12 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     }
 
     public void onDialogDismissed() {
-        L.e("onDialogDismissed");
         isResolvingError = false;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_RESOLVE_ERROR) {
-            L.e("isResolvingError = " + isResolvingError);
             isResolvingError = false;
             if (resultCode == RESULT_OK) {
                 connect();
@@ -139,7 +134,6 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        L.e("isResolvingError = " + isResolvingError);
         outState.putBoolean(STATE_RESOLVING_ERROR, isResolvingError);
     }
 
