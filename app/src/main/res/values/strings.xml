@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">GoogleApiActivityExample</string>
 
-    <!-- Google Play Services-->
-    <string name="play_services_error_fmt">Google Play Services Error: %i</string>
-    <string name="ok">OK</string>
-
     <!--Reverse geocoding-->
     <string name="no_geocoder_available">No geocoder available</string>
     <string name="no_address_found">Sorry, no address found</string>
