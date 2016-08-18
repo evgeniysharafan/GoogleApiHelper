@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.evgeniysharafan.utils.L;
+import com.evgeniysharafan.utils.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -55,6 +56,10 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
             googleApiClient.disconnect();
             googleApiClient = null;
         }
+    }
+
+    public static boolean isGooglePlayServicesAvailable() {
+        return GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(Utils.getApp()) == ConnectionResult.SUCCESS;
     }
 
     @Override
