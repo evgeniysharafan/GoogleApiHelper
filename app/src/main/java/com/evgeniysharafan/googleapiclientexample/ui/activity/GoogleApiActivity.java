@@ -21,9 +21,14 @@ import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallba
 @SuppressWarnings("unused")
 public class GoogleApiActivity extends AppCompatActivity implements OnConnectionFailedListener {
 
+    public interface OnResolutionFailedListener {
+        void onResolutionFailed(int resultCode);
+    }
+
     private static final int REQUEST_RESOLVE_ERROR = 1001;
 
     private GoogleApiClient googleApiClient;
+    private OnResolutionFailedListener onResolutionFailedListener;
 
     public synchronized void buildLocationClient(ConnectionCallbacks callbacks) {
         if (hasAllPermissions(LOCATION_PERMISSIONS)) {
@@ -45,14 +50,23 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
         }
     }
 
+    public void connect(OnResolutionFailedListener onResolutionFailedListener) {
+        if (googleApiClient != null && !googleApiClient.isConnected() && !googleApiClient.isConnecting()) {
+            this.onResolutionFailedListener = onResolutionFailedListener;
+            googleApiClient.connect();
+        }
+    }
+
     public void disconnect() {
         if (googleApiClient != null && (googleApiClient.isConnected() || googleApiClient.isConnecting())) {
+            onResolutionFailedListener = null;
             googleApiClient.disconnect();
         }
     }
 
     public void destroyClient() {
         if (googleApiClient != null && (googleApiClient.isConnected() || googleApiClient.isConnecting())) {
+            onResolutionFailedListener = null;
             googleApiClient.disconnect();
             googleApiClient = null;
         }
@@ -91,6 +105,11 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
         if (requestCode == REQUEST_RESOLVE_ERROR) {
             if (resultCode == RESULT_OK) {
                 connect();
+            } else {
+                L.i("onActivityResult resultCode = " + resultCode);
+                if (onResolutionFailedListener != null) {
+                    onResolutionFailedListener.onResolutionFailed(resultCode);
+                }
             }
         }
 
