@@ -80,8 +80,6 @@ public class GoogleApiActivity extends AppCompatActivity implements OnConnection
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         L.i("onConnectionFailed = " + connectionResult.toString());
 
-        //TODO It looks like GPS 9.4 have a method showErrorNotification (Context context, ConnectionResult result).
-        // Check it and create another one OnConnectionFailedListener for handling errors in background
         if (connectionResult.hasResolution()) {
             try {
                 connectionResult.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
